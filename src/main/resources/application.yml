@@ -1,0 +1,18 @@
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: wang
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
+      enabled: true
+  redis:
+    host: 47.93.122.204
+    port: 6379
+    password: asdfgh123456
+
