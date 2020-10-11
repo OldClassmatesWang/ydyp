@@ -25,7 +25,7 @@ public interface RedisService {
      *   缓存登录的时间
      */
 
-    public void add(String user_id);
+    public String add(String user_id);
 
     /**
      * 2）从redis中根据token查询userId
@@ -37,6 +37,7 @@ public interface RedisService {
      * 3)从redis中根据userId查询登录时间
      */
     public Date getLoginTime(String USERID) throws ParseException;
+
 
 
 }

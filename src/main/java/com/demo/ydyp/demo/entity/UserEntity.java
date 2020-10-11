@@ -2,6 +2,8 @@ package com.demo.ydyp.demo.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author HaiPeng Wang
  * @date 2020/9/27 16:03
@@ -9,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     private String user_id;
 

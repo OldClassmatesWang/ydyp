@@ -1,7 +1,9 @@
 package com.demo.ydyp.demo.controller;
 
 import com.demo.ydyp.demo.common.redis.impl.RedisUtil;
+import com.demo.ydyp.demo.common.wrapper.ReturnWrapper;
 import com.demo.ydyp.demo.form.UserIpForm;
+import com.demo.ydyp.demo.form.UserPhoneForm;
 import com.demo.ydyp.demo.service.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -48,6 +51,19 @@ public class CodeController {
             ServletOutputStream out = response.getOutputStream();
             ImageIO.write(image,"png",out);
         }catch (IOException e){
+        }
+    }
+
+    /**
+     * 获取手机号验证码
+     */
+    @ResponseBody
+    @RequestMapping(path = "/phone",method = RequestMethod.POST)
+    public ReturnWrapper getPhoneCode(@RequestBody UserPhoneForm userPhoneForm){
+        if(codeService.getPhoneCode(userPhoneForm.user_phone)){
+            return new ReturnWrapper().success();
+        }else {
+            return new ReturnWrapper().failure();
         }
     }
 }

@@ -19,4 +19,11 @@ public interface CodeService {
      * @return
      */
     BufferedImage getImageCode(String userIp);
+
+    /**
+     * 获取手机号验证码
+     * @param user_phone
+     * @return
+     */
+    boolean getPhoneCode(String user_phone);
 }

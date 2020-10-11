@@ -1,11 +1,21 @@
 package com.demo.ydyp.demo.controller;
 
 import com.demo.ydyp.demo.common.wrapper.ReturnWrapper;
+import com.demo.ydyp.demo.dto.TokenDto;
+import com.demo.ydyp.demo.form.LoginPhoneCoForm;
+import com.demo.ydyp.demo.form.LoginPhonePsForm;
 import com.demo.ydyp.demo.service.UserService;
+import com.demo.ydyp.demo.util.UserUtil;
 import io.lettuce.core.cluster.PubSubClusterEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author HaiPeng Wang
@@ -13,26 +23,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Description:
  */
 @RequestMapping("/login")
-@Controller
+@RestController
 public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserUtil userUtil;
     /**
      * 用于 手机号和密码登录
      * @return
      */
-    public ReturnWrapper loginByPhoneAndPassword(){
-
-        return new ReturnWrapper();
+    @RequestMapping(path = "/phonePs",method = RequestMethod.POST)
+    public ReturnWrapper loginByPhoneAndPassword(@RequestBody LoginPhonePsForm loginPhonePsForm) throws NoSuchAlgorithmException {
+        int result = userService.loginByPhoneAndPassword(loginPhonePsForm.getUser_phone(),loginPhonePsForm.getUser_password());
+        return userUtil.getResultMessageForLoginByphonePs(result);
     }
+
 
     /**
      * 用于 手机号和验证码登录
      */
-    public ReturnWrapper loginByPhoneAndCode(){
-
-        return  new ReturnWrapper();
+    @RequestMapping(path = "/phoneCo",method = RequestMethod.POST)
+    public ReturnWrapper loginByPhoneAndCode(@RequestBody LoginPhoneCoForm loginPhoneCoForm){
+        TokenDto tokenDto = userService.loginByPhoneAndCode(loginPhoneCoForm.getUser_phone(),loginPhoneCoForm.getPhoneCode());
+        return  userUtil.getResultMessageForLoginByphoneCo(tokenDto);
     }
 
     /**

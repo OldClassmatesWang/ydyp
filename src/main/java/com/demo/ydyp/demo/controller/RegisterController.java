@@ -4,13 +4,13 @@ import com.alibaba.druid.sql.ast.statement.SQLIfStatement;
 import com.demo.ydyp.demo.common.wrapper.ReturnWrapper;
 import com.demo.ydyp.demo.form.UserRegisterForm;
 import com.demo.ydyp.demo.service.UserService;
+import com.demo.ydyp.demo.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @author HaiPeng Wang
@@ -22,26 +22,38 @@ import javax.servlet.http.HttpServletRequest;
  * 用于注册的接口类
  */
 @RequestMapping("/register")
-@Controller
+@RestController
 public class RegisterController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserUtil userUtil;
 
     /**
      * 根据 手机号 注册
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/phone",method = RequestMethod.POST)
     public ReturnWrapper registerByPhone(@RequestBody UserRegisterForm userRegisterForm){
-        System.out.println("访问到了");
-        if (userService.registerByPhone(userRegisterForm.getPhone(),
+//        if (userService.registerByPhone(userRegisterForm.getPhone(),
+//                userRegisterForm.getPassword(),
+//                userRegisterForm.getPhone_code(),
+//                userRegisterForm.getImage_code(),
+//                userRegisterForm.getUser_ip())){
+//            return new ReturnWrapper().success();
+//        }else{
+//            return new ReturnWrapper().failure();
+//        }
+        Integer result  = userService.registerByPhone(userRegisterForm.getPhone(),
                 userRegisterForm.getPassword(),
-                userRegisterForm.getImageCode(),
-                userRegisterForm.getUser_ip())){
-            return new ReturnWrapper();
-        }else{
-            return new ReturnWrapper();
-        }
+                userRegisterForm.getPhone_code(),
+                userRegisterForm.getImage_code(),
+                userRegisterForm.getUser_ip());
+
+        return userUtil.getResultMessage(result);
+
     }
 
     /**
@@ -59,5 +71,6 @@ public class RegisterController {
 
         return  new ReturnWrapper();
     }
+
 
 }

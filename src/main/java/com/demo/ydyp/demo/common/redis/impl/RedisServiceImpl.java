@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Autowired
     RedisTemplate<String,String> redisTemplate;
+
 
     final static String LOGINTOKEN = "LOGIN-TOKEN:";
 
@@ -45,15 +47,18 @@ public class RedisServiceImpl implements RedisService {
      *
      */
     @Override
-    public void add(String user_id) {
+    public String add(String user_id) {
         String key = getUUID();
         String value = user_id;
         String keyTime = user_id;
         String valueTime = new Date().toString();
         //设置 key（uuid）。value（USER-ID：userid）
         redisTemplate.opsForValue().set(key,USERID+value);
+        expire(key,60*60*1);
         //设置 key（userid） value（TIME：loginTime.toString）
         redisTemplate.opsForValue().set(keyTime,TIMETOKEN+valueTime);
+        expire(key,60*60*1);
+        return key;
     }
 
     /**
@@ -95,5 +100,16 @@ public class RedisServiceImpl implements RedisService {
     private String getUUID(){
         String value = UUID.randomUUID().toString();
         return value.replaceAll("-","");
+    }
+
+    /**
+     * 设置Token过期时间
+     */
+    /**
+     * 用于向redis中存入Object数据并设置过期时长
+     */
+    public void expire(String key,long time){
+        Duration duration = Duration.ofSeconds(time);
+        redisTemplate.expire(key,duration);
     }
 }

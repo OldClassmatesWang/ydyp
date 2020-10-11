@@ -17,9 +17,35 @@ public class Md5Util {
      * 将对应的信息进行加密
      */
     public String encryption(String password) throws NoSuchAlgorithmException {
+        /**
+         * Md5加密本质：接收任意长度大小的数据，输出固定长度的哈希值
+         */
+        String result = "";
+
+        //1）MessageDigest 类为应用程序提供信息摘要算法的功能，如 MD5 或 SHA 算法
         MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] bytes = md.digest(password.getBytes());
-        String md5Password = new String(bytes);
-        return md5Password;
+
+        //2）执行加密操作
+        byte[] bytes = password.getBytes();
+
+        //3）MD5算法得到目标的特点，长度为
+        byte[] md5PasswordBytes = md.digest(bytes);
+
+        int i;
+        StringBuffer buf = new StringBuffer("");
+        for (int offset = 0; offset < md5PasswordBytes.length; offset++) {
+            i = md5PasswordBytes[offset];
+            if (i < 0){
+                i += 256;
+            }
+            if (i < 16){
+                buf.append("0");
+            }
+
+            buf.append(Integer.toHexString(i));
+        }
+        result = buf.toString();
+        result = result.substring(8,24);
+        return result;
     }
 }

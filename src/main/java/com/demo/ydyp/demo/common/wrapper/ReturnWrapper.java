@@ -50,12 +50,12 @@ public class ReturnWrapper<T> {
 
     //返回操作成功，不包含data,自定义message
     public  <T>ReturnWrapper<T> successWithMessage(String message){
-        return new ReturnWrapper<>(CODE_SUCCESS,message,null);
+        return new ReturnWrapper(CODE_SUCCESS,message,"");
     }
 
     //返回操作成功，不包含data，message操作成功
     public  <T>ReturnWrapper<T> success(){
-        return new ReturnWrapper<>(CODE_SUCCESS,MESSAGE_SUCCESS,null);
+        return new ReturnWrapper(CODE_SUCCESS,MESSAGE_SUCCESS,"");
     }
 
 
@@ -73,12 +73,12 @@ public class ReturnWrapper<T> {
 
     //返回操作失败，不包含data,自定义message
     public  <T>ReturnWrapper<T> failureWithMessage(String message){
-        return new ReturnWrapper<>(CODE_FAILURE,message,null);
+        return new ReturnWrapper(CODE_FAILURE,message,"");
     }
 
     //返回操作失败，不包含data，message操作失败
     public  <T>ReturnWrapper<T> failure(){
-        return new ReturnWrapper<>(CODE_FAILURE,MESSAGE_FAILURE,null);
+        return new ReturnWrapper(CODE_FAILURE,MESSAGE_FAILURE,"");
     }
 
     //判断是否成功

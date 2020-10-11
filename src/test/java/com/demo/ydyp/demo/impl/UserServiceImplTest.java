@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author HaiPeng Wang
  * @date 2020/9/29 14:53
  * @Description:
+ * 
  */
 
 @SpringBootTest
@@ -21,7 +22,8 @@ class UserServiceImplTest {
 
     @Test
     public void test(){
-        userService.getAllUser();
+        System.out.println(userService.getAllUser());
+
     }
 
 

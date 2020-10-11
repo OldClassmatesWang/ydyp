@@ -2,6 +2,7 @@ package com.demo.ydyp.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author HaiPeng Wang
@@ -9,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Description:
  */
 @RequestMapping("/sort")
-@Controller
+@RestController
 public class SortController {
 }

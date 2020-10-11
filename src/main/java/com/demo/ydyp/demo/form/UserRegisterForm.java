@@ -18,7 +18,10 @@ public class UserRegisterForm {
     private String phone;
 
     @NotBlank(message =  "图形验证码不能为空")
-    private String imageCode;
+    private String image_code;
+
+    @NotBlank(message = "手机号验证码不能为空")
+    private String phone_code;
 
     @NotBlank(message = "密码不能为空")
     private String password;

@@ -106,7 +106,7 @@ public class ImageCodeUtil {
          * code 作为value
          * 存到数据库中
          */
-        redisUtil.set(userIp,code);
+        redisUtil.set(userIp,code,60*10);
         //设置绘制区域
         pen.fillRect(0, 0, width, height);
         //设置字体(字体，加粗，大小）
